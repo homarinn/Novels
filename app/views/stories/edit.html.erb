@@ -1,0 +1,24 @@
+<div class="text-center">
+  <h1>話の編集</h1>
+</div>
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+
+    <%= form_for(@story) do |s| %>
+
+      <div class="form-group">
+        <%= s.label :subtitle, 'サブタイトル' %>
+        <%= s.text_field :subtitle, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= s.label :content, '内容' %>
+        <%= s.text_area :content, class: 'form-control', rows: 20 %>
+      </div>
+      
+        <%= s.submit '更新', class: 'btn btn-primary btn-block' %>
+      
+    <% end %>
+  </div>
+</div>

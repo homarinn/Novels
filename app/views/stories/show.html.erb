@@ -1,0 +1,5 @@
+<%= link_to "話を編集", edit_story_path(@story) %>
+<%= link_to "話を削除", @story, method: :delete, data: {confirm: "話を削除しますか？"} %>
+<%= @story.subtitle %>
+<%= @story.content %>
+<%= link_to "目次に戻る", @story.novel %>

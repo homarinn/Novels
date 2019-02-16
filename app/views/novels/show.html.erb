@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col-xs-offset-1 col-xs-10">
+    <div class="text-center">
+      <h1><%= @novel.title %></h1>
+    </div>
+    <div class="text-right">
+      <h4><%= @novel.user.name %></h4>
+    </div>
+    <div class="col-xs-3">
+      <% if logged_in? %>
+        <% if current_user == @novel.user %>
+          <% s_count = @novel.stories.count %>
+          <% link_title = (s_count == 0) ? "新話投稿" : "次話投稿" %>
+          <%= link_to link_title, new_story_path(@novel) %>
+          <div>
+            <%= link_to "小説情報を編集", edit_novel_path(@novel) %>
+          </div>
+          <div>
+            <%= link_to "小説を削除", @novel, method: :delete, data: {confirm: "小説を削除しますか？"} %>
+          </div>
+        <% else %>
+          <div>
+            <%= render "bookmarks/like_button", novel: @novel %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-xs-offset-2 col-xs-8">
+    <div>
+      <% @novel.tag_list.each do |tag| %>
+        <span class="label label-primary"><%= tag %></span>
+      <% end %>
+    </div>
+    <div>
+      <%= @novel.summary %>
+    </div>
+  </div>
+  <div class="col-xs-offset-2 col-xs-8">
+    <% @novel.stories.each do |story| %>
+    <div>
+      <%= link_to story.subtitle, story %>
+    </div>
+    <% end %>
+  </div>
+</div>
+  
+  

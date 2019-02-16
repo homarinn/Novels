@@ -1,0 +1,24 @@
+<div class="row">
+  <div class ="col-xs-4">
+    <h2><%= @user.name %></h2>
+    <% if current_user == @user %>
+      <h3><%= link_to "新規小説作成", new_novel_path %></h3>
+    <% end %>
+  </div>
+  <div class="col-xs-offset-1 col-xs-7">
+    <ul class="nav nav-tabs nav-justified">
+      <li class="<%= 'active' if current_page?(user_path(@user)) %>">
+        <%= link_to "投稿済み小説一覧", user_path(@user) %>
+      </li>
+      <li class="<%= 'active' if current_page?(likes_user_path(@user)) %>">
+        <%= link_to "ブックマークリスト",  likes_user_path(@user) %>
+      </li>
+    </ul>
+    <% @novels.each do |novel| %>
+      <div>
+        <%= link_to novel.title, novel %>
+      </div>
+    <% end %>
+  </div>
+</div>
+

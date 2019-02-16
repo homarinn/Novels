@@ -1,0 +1,23 @@
+<h1>ランキング</h1>
+<% if @novels.present? %>
+  <div class="row">
+    <% @novels.each_with_index do |novel, index| %>
+      <div class="novel">
+        <div class="col-xs-offset-2 col-xs-8">
+          <ul class="media-list">
+	          <li class="media">
+          		<div class="media-left">
+          		  <h4 class="media-heading"><%= index+1 %>位</h4>
+          		  <P><%= @ranking_counts[novel.id] %> pt</P>
+          		</div>
+          		<div class="media-body">
+          			<h4 class="media-heading"><%= link_to novel.title, novel %></h4>
+          			<P>作者名：<%= link_to novel.user.name, user_path(novel.user) %></P>
+          		</div>
+	          </li>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

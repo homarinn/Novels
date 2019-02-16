@@ -1,0 +1,19 @@
+<% if current_user.bookmarknow?(novel) %> 
+  <%= form_for(current_user.bookmarks.find_by(novel_id: novel.id), html: { method: :delete }) do |f| %>
+
+      
+    <%= hidden_field_tag :novel_id, novel.id %>
+    <%= f.submit 'ブックマーク解除', class: 'btn btn-danger btn-xs' %>
+
+    
+  <% end %>
+<% else %>
+  <%= form_for(current_user.bookmarks.build) do |f| %>
+
+      
+    <%= hidden_field_tag :novel_id, novel.id %>
+    <%= f.submit 'ブックマークに追加', class: 'btn btn-primary btn-xs' %>
+
+    
+  <% end %>
+<% end %>
