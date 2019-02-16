@@ -1,5 +1,21 @@
-<%= link_to "話を編集", edit_story_path(@story) %>
-<%= link_to "話を削除", @story, method: :delete, data: {confirm: "話を削除しますか？"} %>
-<%= @story.subtitle %>
-<%= @story.content %>
-<%= link_to "目次に戻る", @story.novel %>
+<div class="row">
+  <div class="text-center">
+    <h1><%= @story.subtitle %></h1>
+  </div>
+  <% if @story.novel.user == current_user %>
+    <div class="col-xs-offset-2 col-xs-3">
+      <div>
+        <%= link_to "話を編集", edit_story_path(@story) %>
+      </div>
+      <div>
+        <%= link_to "話を削除", @story, method: :delete, data: {confirm: "話を削除しますか？"} %>
+      </div>
+    </div>
+  <% end %>
+  <div class="col-xs-offset-2 col-xs-8">
+    <%= @story.content %>
+  </div>
+  <div class="col-xs-offset-99 col-xs-2">
+    <%= link_to "目次に戻る", @story.novel %>
+  </div>
+</div>
