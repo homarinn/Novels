@@ -1,5 +1,6 @@
 class NovelsController < ApplicationController
   before_action :require_user_logged_in, only: [:new, :create, :edit, :update, :destroy]
+  before_action :check_my_novel, only:  [:edit, :update, :destroy]
   
   def index
     query = { title_cont: params[:q] }
@@ -56,5 +57,13 @@ class NovelsController < ApplicationController
   
   def novel_params
     params.require(:novel).permit(:title, :summary, :tag_list)
+  end
+  
+  def check_my_novel
+      @novel = Novel.find(params[:id])
+      if @novel.user != current_user
+        flash[:danger] = "編集の権限がありません。"
+        redirect_to root_url
+      end
   end
 end

@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+
+    <%= form_for(story) do |s| %>
+      <%= render 'layouts/error_messages', model: s.object %>
+
+      <div class="form-group">
+        <%= s.label :subtitle, 'サブタイトル' %>
+        <%= s.text_field :subtitle, class: 'form-control' %>
+        <P>入力文字数制限：100文字</P>
+      </div>
+
+      <div class="form-group">
+        <%= s.label :content, '内容' %>
+        <%= s.text_area :content, class: 'form-control', rows: 20 %>
+        <P>入力文字数制限：50000文字</P>
+      </div>
+      
+      <% if request.path_info = new_story_path %>
+        <%= s.submit '投稿', class: 'btn btn-primary btn-block' %>
+      <% else %>
+        <%= s.submit '更新', class: 'btn btn-primary btn-block' %>
+      <% end %>
+      
+    <% end %>
+  </div>
+</div>

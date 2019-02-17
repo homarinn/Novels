@@ -1,17 +1,17 @@
 class StoriesController < ApplicationController
   before_action :require_user_logged_in, only: [:new, :create, :edit, :update, :destroy]
-  before_action :check_my_novel, only:  [:new, :create, :edit, :update, :destroy]
+  before_action :check_my_novel, only:  [:new, :create]
+  before_action :check_my_story, only:  [:edit, :update, :destroy]
+  
   def show
     @story = Story.find(params[:id])
   end
   
   def new
-    @novel = Novel.find(session[:novel_id])
     @story = @novel.stories.build
   end
 
   def create
-    @novel = Novel.find(session[:novel_id])
     @story = @novel.stories.build(story_params)
     
     if @story.save
@@ -25,11 +25,9 @@ class StoriesController < ApplicationController
   end
 
   def edit
-    @story = Story.find(params[:id])
   end
 
   def update
-    @story = Story.find(params[:id])
     
     if @story.update(story_params)
       flash[:success] = "話を編集しました。"
@@ -41,7 +39,6 @@ class StoriesController < ApplicationController
   end
 
   def destroy
-    @story = Story.find(params[:id])
     session[:destroy] = @story.novel_id
     @story.destroy
     flash[:success] = "話を削除しました。"
@@ -59,8 +56,17 @@ class StoriesController < ApplicationController
   def check_my_novel
       @novel = Novel.find(session[:novel_id])
       if @novel.user != current_user
+        flash[:danger] = "投稿の権限がありません。"
         redirect_to root_url
       end
+  end
+  
+  def check_my_story
+    @story = Story.find(params[:id])
+    if @story.novel.user != current_user
+      flash[:danger] = "編集の権限がありません。"
+      redirect_to root_url
+    end
   end
 
 end
